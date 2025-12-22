@@ -2,12 +2,15 @@ import java.util.List;
 
 public class Repository {
     private List<Pessoa> usuarios;
+    private static int proximoId = 1;
+    //this.id = proximoId++;
 
     public Repository(List<Pessoa> usuarios) {
         this.usuarios = usuarios;
     }
 
     public void salvar(Pessoa pessoa){
+        pessoa.setId(proximoId++);
         usuarios.add(pessoa);
     }
 
@@ -34,5 +37,13 @@ public class Repository {
 
     public void setUsuarios(List<Pessoa> usuarios) {
         this.usuarios = usuarios;
+    }
+
+    public static int getProximoId() {
+        return proximoId;
+    }
+
+    public static void setProximoId(int proximoId) {
+        Repository.proximoId = proximoId;
     }
 }

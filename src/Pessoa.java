@@ -9,8 +9,7 @@ public class Pessoa {
     private String cpf;
     private List<Endereco> enderecos;
 
-    public Pessoa(int id, String nome, LocalDate dataNasc, String cpf, List<Endereco> enderecos) {
-        this.id = id;
+    public Pessoa(String nome, LocalDate dataNasc, String cpf, List<Endereco> enderecos) {
         this.nome = nome;
         this.dataNasc = dataNasc;
         this.cpf = cpf;
