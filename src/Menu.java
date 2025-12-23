@@ -1,104 +1,126 @@
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Menu {
     private final Controller controller;
     private final Scanner scanner = new Scanner(System.in);
-    private int opcaoMenu;
-    private int opcaoMenuA;
-    private int opcaoMenuM;
 
     public Menu(Controller controller) {
         this.controller = controller;
     }
 
-    public void ativaMenu(){
-        do {
-            controlaMenus();
-        } while (opcaoMenu != 0);
+    private int lerInt(String msg){
+        System.out.println(msg);
+        int valor = scanner.nextInt();
+        scanner.nextLine();
+        return valor;
     }
 
-    public void controlaMenus(){
-        System.out.println("""
+    private String lerString(String msg){
+        System.out.println(msg);
+        return scanner.nextLine();
+    }
+
+    public void ativaMenu(){
+        int opcao;
+        do {
+            opcao = controlaMenus();
+        } while (opcao != 0);
+    }
+
+    public int controlaMenus(){
+        int opcaoMenu = lerInt("""
                 (1) Opções de alteração (Criar, alterar, e excluir).
                 (2) Visualizar informações (Lista de usuários ou endereços, e idade).
                 (0) Sair.""");
-        opcaoMenu = scanner.nextInt();
+
         switch (opcaoMenu){
             case 1:
-                do {
                     menuAlterar();
-                } while (opcaoMenuA != 0);
-                break;
+                    break;
             case 2:
-                do {
                     menuMostrar();
-                } while (opcaoMenuM != 0);
                 break;
             default:
-                System.out.println("Opção inválida. Digite 1, 2, ou 3 de acordo com as intruções.");
+                System.out.println("Opção inválida. Digite 1, 2, ou 0 de acordo com as intruções.");
                 break;
         }
+        return opcaoMenu;
     }
 
     public void menuAlterar(){
-        System.out.println("""
-                (1) Criar usuário com seu primeiro endereço.
-                (2) Adicionar novo endereço a um usuário.
-                (3) Atualizar (todos) os dados.
-                (4) Deletar usuário.
-                (0) Sair.""");
-        opcaoMenuA = scanner.nextInt();
-        switch (opcaoMenuA){
-            case 1:
-                controller.criarUsuario();
-                break;
-            case 2:
-                System.out.println("Id do usuário: ");
-                int pessoaIdParaAddAdress = scanner.nextInt();
-                controller.addNovoEnderecoAUmUsuario(pessoaIdParaAddAdress);
-                break;
-            case 3:
-                System.out.println("Id do usuário que terá todos os dados atualizados: ");
-                int pessoaIdParaAtualizar = scanner.nextInt();
-                Pessoa dadosNovos = controller.criarUsuario();
+        int opcaoMenuA;
+        do {
+            opcaoMenuA = lerInt("""
+                    (1) Criar usuário com seu primeiro endereço.
+                    (2) Adicionar novo endereço a um usuário.
+                    (3) Atualizar (todos) os dados.
+                    (4) Deletar usuário.
+                    (0) Voltar.""");
+            switch (opcaoMenuA) {
+                case 1:
+                    controller.criarUsuario();
+                    break;
+                case 2: {
+                    int id = lerInt("Id do usuário: ");
 
-                controller.atualizarDadosPorId(pessoaIdParaAtualizar, dadosNovos);
+                    controller.addNovoEnderecoAUmUsuario(id);
+                }
                 break;
-            case 4:
-                System.out.println("Id do usuário: ");
-                int pessoaIdParaDeletar = scanner.nextInt();
+                case 3: {
+                    int id = lerInt("Id: ");
 
-                controller.removerUsuario(pessoaIdParaDeletar);
+                    String nome = lerString("Nome: ");
+
+                    System.out.println("Data de nascimento (aaaa-mm-dd): ");
+                    LocalDate dataNasc = LocalDate.parse(scanner.nextLine());
+
+                    String cpf = lerString("CPF: ");
+
+                    controller.atualizarDadosPorId(id, nome, dataNasc, cpf);
+                    break;
+                }
+                case 4: {
+                    int id = lerInt("Id do usuário: ");
+
+                    controller.removerUsuario(id);
+                }
                 break;
-            default:
-                System.out.println("Opção inválida. Digite 1, 2, ou 3 de acordo com as intruções.");
-                break;
-        }
+                default:
+                    System.out.println("Opção inválida. Digite 1, 2, ou 0 de acordo com as intruções.");
+                    break;
+            }
+        } while (opcaoMenuA != 0);
     }
 
     public void menuMostrar(){
-        System.out.println("""
-                (1) Ver todos os usuários.
-                (2) Ver todos os endereços por usuário.
-                (3) Ver idade de um usuário.
-                (0) Sair.""");
-        opcaoMenuM = scanner.nextInt();
-        switch (opcaoMenuM){
-            case 1:
-                controller.mostrarTodosUsuarios();
-                break;
-            case 2:
-                System.out.println("Id: ");
-                int pessoaIdMostrarEndereco = scanner.nextInt();
+        int opcaoMenuM;
+        do {
+            opcaoMenuM = lerInt("""
+                    (1) Ver todos os usuários.
+                    (2) Ver todos os endereços por usuário.
+                    (3) Ver idade de um usuário.
+                    (0) Voltar.""");
+            switch (opcaoMenuM) {
+                case 1:
+                    System.out.println(controller.mostrarTodosUsuarios());
+                    break;
+                case 2: {
+                    int id = lerInt("Id do usuário: ");
 
-                controller.mostrarEnderecosPorId(pessoaIdMostrarEndereco);
-                break;
-            case 3:
-                System.out.println("Id: ");
-                int pessoaIdMostrarIdade = scanner.nextInt();
+                    System.out.println(controller.mostrarEnderecosPorId(id));
+                    break;
+                }
+                case 3: {
+                    int id = lerInt("Id do usuário: ");
 
-                controller.mostrarIdade(pessoaIdMostrarIdade);
-                break;
-        }
+                    System.out.println(controller.mostrarIdade(id));
+                    break;
+                }
+                default:
+                    System.out.println("Opção inválida. Digite 1, 2, 3, ou 0 de acordo com as intruções.");
+                    break;
+            }
+        } while (opcaoMenuM != 0);
     }
 }

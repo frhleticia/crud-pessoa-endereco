@@ -9,29 +9,11 @@ public class Service {
         this.repository = repository;
     }
 
-    public Pessoa procurarPessoaPorId(int pessoaId){
-        for (Pessoa pessoa : repository.getUsuarios()){
-            if (!(pessoa.getId() == pessoaId)){
-                throw new RuntimeException("Pessoa não encontrada");
-            }
-            return pessoa;
-        }
-        return null;
-    }
-
     public Pessoa criarUsuario(String nome, LocalDate dataNasc, String cpf, Endereco endereco){
 
-        if (nome == null || nome.isBlank()){
-            throw new RuntimeException("Campo nome é obrigatório");
-        }
+        validarNome(nome);
 
-        if (cpf == null || cpf.isBlank()){
-            throw new RuntimeException("Campo CPF é obrigatório");
-        }
-
-        if (cpf.length() != 11){
-            throw new RuntimeException("CPF deve conter 11 dígitos");
-        }
+        validarCpf(cpf, -1);
 
         for (Pessoa p : repository.getUsuarios()){
             if (cpf.equals(p.getCpf())){
@@ -45,6 +27,10 @@ public class Service {
         Pessoa p = new Pessoa(nome, dataNasc, cpf, enderecos);
         repository.salvar(p);
         return p;
+    }
+
+    public Pessoa buscarPessoaPorId(int pessoaId){
+        return repository.buscarPorId(pessoaId);
     }
 
     public Endereco criarEndereco(String rua, Long numero, String bairro, String cidade, String estado, String cep){
@@ -70,24 +56,51 @@ public class Service {
         return p.getEnderecos().toString();
     }
 
-    public void atualizarPessoa(int pessoaId, Pessoa dadosNovos) {
-        var p = repository.buscarPorId(pessoaId);
+    public void atualizarPessoa(int pessoaId, String nome, LocalDate dataNasc, String cpf) {
+        Pessoa p = repository.buscarPorId(pessoaId);
         if (p == null) {
             throw new RuntimeException("Pessoa não encontrada");
         }
-        p.setNome(dadosNovos.getNome());
-        p.setDataNasc(dadosNovos.getDataNasc());
-        p.setCpf(dadosNovos.getCpf());
-        p.setEnderecos(dadosNovos.getEnderecos());
+
+        if (nome == null || nome.isBlank()){
+            throw new RuntimeException("Campo nome é obrigatório");
+        }
+
+        validarCpf(cpf, pessoaId);
+
+        p.setNome(nome);
+        p.setDataNasc(dataNasc);
+        p.setCpf(cpf);
     }
 
-    public void removerPessoa(int pessoaId){
-        for (Pessoa pessoa : repository.getUsuarios()){
-            if (!(pessoa.getId() == pessoaId)){
-                throw new RuntimeException("Pessoa não encontrada");
-            }
-            repository.remover(pessoa);
+    public void validarCpf(String cpf, int pessoaId){
+        if (cpf == null || cpf.isBlank()){
+            throw new RuntimeException("Campo CPF é obrigatório");
         }
+
+        for (Pessoa p : repository.getUsuarios()){
+            if (p.getCpf().equals(cpf) && p.getId() != pessoaId){
+                throw new RuntimeException("CPF já cadastrado");
+            }
+        }
+
+        if (cpf.length() != 11){
+            throw new RuntimeException("CPF deve conter 11 dígitos");
+        }
+    }
+
+    public void validarNome(String nome){
+        if (nome == null || nome.isBlank()){
+            throw new RuntimeException("Campo nome é obrigatório");
+        }
+    }
+
+    public void removerPessoa(int pessoaId) {
+        Pessoa p = repository.buscarPorId(pessoaId);
+        if (p == null) {
+            throw new RuntimeException("Pessoa não encontrada");
+        }
+        repository.remover(p);
     }
 
     public int calcularIdade(int pessoaId){

@@ -53,7 +53,7 @@ public class Controller {
     }
 
     public void addNovoEnderecoAUmUsuario(int pessoaId){
-        Pessoa p = service.procurarPessoaPorId(pessoaId);
+        Pessoa p = service.buscarPessoaPorId(pessoaId);
         Endereco e = criarEndereco();
         List<Endereco> enderecos = p.getEnderecos();
         enderecos.add(e);
@@ -72,9 +72,10 @@ public class Controller {
         return service.listarEnderecosPorId(pessoaId);
     }
 
-    public void atualizarDadosPorId(int pessoaId, Pessoa dadosNovos){
-        service.atualizarPessoa(pessoaId, dadosNovos);
+    public void atualizarDadosPorId(int pessoaId, String nome, LocalDate dataNasc, String cpf){
+        service.atualizarPessoa(pessoaId, nome, dataNasc, cpf);
     }
+
 
     public void removerUsuario(int pessoaId){
         service.removerPessoa(pessoaId);
