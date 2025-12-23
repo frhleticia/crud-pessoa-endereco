@@ -10,7 +10,7 @@ public class Controller {
         this.service = service;
     }
 
-    public Pessoa criarUsuario(){
+    public void criarUsuario(){
         System.out.println("Nome: ");
         String nome = scanner.nextLine();
         System.out.println("Data de nascimento (aaaa-mm-dd): ");
@@ -32,7 +32,7 @@ public class Controller {
         String cep = scanner.nextLine();
 
         Endereco e = service.criarEndereco(rua, numero, bairro, cidade, estado, cep);
-        return service.criarUsuario(nome, dataNasc, cpf, e);
+        service.criarUsuario(nome, dataNasc, cpf, e);
     }
 
     public Endereco criarEndereco(){
