@@ -5,7 +5,25 @@ import java.util.List;
 public class Service {
     private Repository repository;
 
-    public void criarUsuario(String nome, LocalDate dataNasc, String cpf, Endereco endereco){
+    public Pessoa procurarPessoaPorId(int pessoaId){
+        for (Pessoa pessoa : repository.getUsuarios()){
+            if (!(pessoa.getId() == pessoaId)){
+                throw new RuntimeException("Pessoa não encontrada");
+            }
+            return pessoa;
+        }
+        return null;
+    }
+
+    public Pessoa criarUsuario(String nome, LocalDate dataNasc, String cpf, Endereco endereco){
+
+        if (nome.isBlank()){
+            throw new RuntimeException("Campo nome é obrigatório");
+        }
+
+        if (cpf.isBlank()){
+            throw new RuntimeException("Campo CPF é obrigatório");
+        }
 
         for (Pessoa p : repository.getUsuarios()){
             if (cpf.equals(p.getCpf())){
@@ -18,13 +36,15 @@ public class Service {
 
         Pessoa p = new Pessoa(nome, dataNasc, cpf, enderecos);
         repository.salvar(p);
+        return p;
     }
 
     public Endereco criarEndereco(String rua, Long numero, String bairro, String cidade, String estado, String cep){
 
-        if (cep.length() == 8){
+        if (cep.length() != 8){
             throw new RuntimeException("CEP inválido");
         }
+
         return new Endereco(rua, numero, bairro, cidade, estado, cep);
     }
 
@@ -69,10 +89,4 @@ public class Service {
         }
         return p.calcularIdade();
     }
-
-//    public void validarCpf(Pessoa cpf){
-//        if (cpf != null){
-//
-//        }
-//    }
 }

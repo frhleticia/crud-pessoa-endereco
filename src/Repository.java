@@ -3,7 +3,6 @@ import java.util.List;
 public class Repository {
     private List<Pessoa> usuarios;
     private static int proximoId = 1;
-    //this.id = proximoId++;
 
     public Repository(List<Pessoa> usuarios) {
         this.usuarios = usuarios;
