@@ -4,10 +4,6 @@ public class Repository {
     private List<Pessoa> usuarios;
     private static int proximoId = 1;
 
-    public Repository(List<Pessoa> usuarios) {
-        this.usuarios = usuarios;
-    }
-
     public void salvar(Pessoa pessoa){
         pessoa.setId(proximoId++);
         usuarios.add(pessoa);

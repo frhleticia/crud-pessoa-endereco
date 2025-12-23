@@ -3,7 +3,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Service {
-    private Repository repository;
+    private final Repository repository;
+
+    public Service(Repository repository) {
+        this.repository = repository;
+    }
 
     public Pessoa procurarPessoaPorId(int pessoaId){
         for (Pessoa pessoa : repository.getUsuarios()){

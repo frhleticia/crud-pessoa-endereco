@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Scanner;
 
 public class Controller {
@@ -51,14 +52,12 @@ public class Controller {
         return service.criarEndereco(rua, numero, bairro, cidade, estado, cep);
     }
 
-    public Pessoa addNovoEnderecoAUmUsuario(int pessoaId){
-
-        if (p == null) {
-            throw new RuntimeException("Pessoa não encontrada");
-        }
-
+    public void addNovoEnderecoAUmUsuario(int pessoaId){
+        Pessoa p = service.procurarPessoaPorId(pessoaId);
         Endereco e = criarEndereco();
-
+        List<Endereco> enderecos = p.getEnderecos();
+        enderecos.add(e);
+        p.setEnderecos(enderecos);
     }
 
     public int mostrarIdade(int pessoaId){

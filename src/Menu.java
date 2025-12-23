@@ -43,8 +43,9 @@ public class Menu {
     public void menuAlterar(){
         System.out.println("""
                 (1) Criar usuário com seu primeiro endereço.
-                (2) Atualizar (todos) os dados.
-                (3) Deletar usuário.
+                (2) Adicionar novo endereço a um usuário.
+                (3) Atualizar (todos) os dados.
+                (4) Deletar usuário.
                 (0) Sair.""");
         opcaoMenuA = scanner.nextInt();
         switch (opcaoMenuA){
@@ -52,14 +53,19 @@ public class Menu {
                 controller.criarUsuario();
                 break;
             case 2:
+                System.out.println("Id do usuário: ");
+                int pessoaIdParaAddAdress = scanner.nextInt();
+                controller.addNovoEnderecoAUmUsuario(pessoaIdParaAddAdress);
+                break;
+            case 3:
                 System.out.println("Id do usuário que terá todos os dados atualizados: ");
                 int pessoaIdParaAtualizar = scanner.nextInt();
                 Pessoa dadosNovos = controller.criarUsuario();
 
                 controller.atualizarDadosPorId(pessoaIdParaAtualizar, dadosNovos);
                 break;
-            case 3:
-                System.out.println("Id do usuário que terá todos os dados atualizados: ");
+            case 4:
+                System.out.println("Id do usuário: ");
                 int pessoaIdParaDeletar = scanner.nextInt();
 
                 controller.removerUsuario(pessoaIdParaDeletar);
