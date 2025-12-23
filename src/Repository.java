@@ -22,8 +22,8 @@ public class Repository {
         return usuarios;
     }
 
-    public void remover(int id){
-        usuarios.remove(id);
+    public void remover(Pessoa pessoa){
+        usuarios.remove(pessoa);
     }
 
     public List<Pessoa> getUsuarios() {

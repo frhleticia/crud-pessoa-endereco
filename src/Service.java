@@ -21,12 +21,16 @@ public class Service {
 
     public Pessoa criarUsuario(String nome, LocalDate dataNasc, String cpf, Endereco endereco){
 
-        if (nome.isBlank()){
+        if (nome == null || nome.isBlank()){
             throw new RuntimeException("Campo nome é obrigatório");
         }
 
-        if (cpf.isBlank()){
+        if (cpf == null || cpf.isBlank()){
             throw new RuntimeException("Campo CPF é obrigatório");
+        }
+
+        if (cpf.length() != 11){
+            throw new RuntimeException("CPF deve conter 11 dígitos");
         }
 
         for (Pessoa p : repository.getUsuarios()){
@@ -82,8 +86,8 @@ public class Service {
             if (!(pessoa.getId() == pessoaId)){
                 throw new RuntimeException("Pessoa não encontrada");
             }
+            repository.remover(pessoa);
         }
-        repository.remover(pessoaId);
     }
 
     public int calcularIdade(int pessoaId){
