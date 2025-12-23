@@ -1,7 +1,8 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Repository {
-    private List<Pessoa> usuarios;
+    private List<Pessoa> usuarios = new ArrayList<>();
     private static int proximoId = 1;
 
     public void salvar(Pessoa pessoa){
