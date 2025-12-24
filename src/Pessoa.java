@@ -16,6 +16,17 @@ public class Pessoa {
         this.enderecos = enderecos;
     }
 
+    @Override
+    public String toString() {
+        return "Pessoa{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", dataNasc=" + dataNasc +
+                ", cpf='" + cpf + '\'' +
+                ", enderecos=" + enderecos +
+                '}';
+    }
+
     public int calcularIdade(){
         LocalDate dataHoje = LocalDate.now();
         return Period.between(this.getDataNasc(), dataHoje).getYears();

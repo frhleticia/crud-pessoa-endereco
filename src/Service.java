@@ -4,6 +4,8 @@ import java.util.List;
 
 public class Service {
     private final Repository repository;
+    private int proximoPessoaId = 1;
+    private int proximoEnderecoId = 1;
 
     public Service(Repository repository) {
         this.repository = repository;
@@ -25,7 +27,9 @@ public class Service {
         enderecos.add(endereco);
 
         Pessoa p = new Pessoa(nome, dataNasc, cpf, enderecos);
+        p.setId(proximoPessoaId++);
         repository.salvar(p);
+
         return p;
     }
 
@@ -33,17 +37,22 @@ public class Service {
         return repository.buscarPorId(pessoaId);
     }
 
+    public void setIdDoEndereco(Endereco endereco){
+        endereco.setId(proximoEnderecoId++);
+    }
+
     public Endereco criarEndereco(String rua, Long numero, String bairro, String cidade, String estado, String cep){
 
         if (cep.length() != 8){
             throw new RuntimeException("CEP inválido");
         }
-
-        return new Endereco(rua, numero, bairro, cidade, estado, cep);
+        Endereco e = new Endereco(rua, numero, bairro, cidade, estado, cep);
+        setIdDoEndereco(e);
+        return e;
     }
 
-    public List<Pessoa> listarTodosUsuarios(){
-        return repository.mostrarTodosUsuarios();
+    public String listarTodosUsuarios(){
+        return repository.mostrarTodosUsuarios().toString();
     }
 
     public String listarEnderecosPorId(int pessoaId){

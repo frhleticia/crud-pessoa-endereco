@@ -3,10 +3,8 @@ import java.util.List;
 
 public class Repository {
     private List<Pessoa> usuarios = new ArrayList<>();
-    private static int proximoId = 1;
 
     public void salvar(Pessoa pessoa){
-        pessoa.setId(proximoId++);
         usuarios.add(pessoa);
     }
 
@@ -33,13 +31,5 @@ public class Repository {
 
     public void setUsuarios(List<Pessoa> usuarios) {
         this.usuarios = usuarios;
-    }
-
-    public static int getProximoId() {
-        return proximoId;
-    }
-
-    public static void setProximoId(int proximoId) {
-        Repository.proximoId = proximoId;
     }
 }

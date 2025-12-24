@@ -65,7 +65,7 @@ public class Controller {
     }
 
     public String mostrarTodosUsuarios(){
-        return service.listarTodosUsuarios().toString();
+        return service.listarTodosUsuarios();
     }
 
     public String mostrarEnderecosPorId(int pessoaId){

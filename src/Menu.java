@@ -41,9 +41,6 @@ public class Menu {
             case 2:
                     menuMostrar();
                 break;
-            default:
-                System.out.println("Opção inválida. Digite 1, 2, ou 0 de acordo com as intruções.");
-                break;
         }
         return opcaoMenu;
     }
@@ -56,7 +53,7 @@ public class Menu {
                     (2) Adicionar novo endereço a um usuário.
                     (3) Atualizar (todos) os dados.
                     (4) Deletar usuário.
-                    (0) Voltar.""");
+                    (-1) Voltar.""");
             switch (opcaoMenuA) {
                 case 1:
                     controller.criarUsuario();
@@ -86,11 +83,8 @@ public class Menu {
                     controller.removerUsuario(id);
                 }
                 break;
-                default:
-                    System.out.println("Opção inválida. Digite 1, 2, ou 0 de acordo com as intruções.");
-                    break;
             }
-        } while (opcaoMenuA != 0);
+        } while (opcaoMenuA != -1);
     }
 
     public void menuMostrar(){
@@ -100,7 +94,7 @@ public class Menu {
                     (1) Ver todos os usuários.
                     (2) Ver todos os endereços por usuário.
                     (3) Ver idade de um usuário.
-                    (0) Voltar.""");
+                    (-1) Voltar.""");
             switch (opcaoMenuM) {
                 case 1:
                     System.out.println(controller.mostrarTodosUsuarios());
@@ -117,10 +111,7 @@ public class Menu {
                     System.out.println(controller.mostrarIdade(id));
                     break;
                 }
-                default:
-                    System.out.println("Opção inválida. Digite 1, 2, 3, ou 0 de acordo com as intruções.");
-                    break;
             }
-        } while (opcaoMenuM != 0);
+        } while (opcaoMenuM != -1);
     }
 }
