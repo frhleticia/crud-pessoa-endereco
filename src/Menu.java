@@ -51,7 +51,7 @@ public class Menu {
             opcaoMenuA = lerInt("""
                     (1) Criar usuário com seu primeiro endereço.
                     (2) Adicionar novo endereço a um usuário.
-                    (3) Atualizar (todos) os dados.
+                    (3) Atualizar dados.
                     (4) Deletar usuário.
                     (-1) Voltar.""");
             switch (opcaoMenuA) {
@@ -92,8 +92,8 @@ public class Menu {
         do {
             opcaoMenuM = lerInt("""
                     (1) Ver todos os usuários.
-                    (2) Ver todos os endereços por usuário.
-                    (3) Ver idade de um usuário.
+                    (2) Ver idade de um usuário.
+                    (3) Ver todos os endereços de um usuário.
                     (-1) Voltar.""");
             switch (opcaoMenuM) {
                 case 1:
@@ -102,13 +102,13 @@ public class Menu {
                 case 2: {
                     int id = lerInt("Id do usuário: ");
 
-                    System.out.println(controller.mostrarEnderecosPorId(id));
+                    System.out.println(controller.mostrarIdade(id));
                     break;
                 }
                 case 3: {
                     int id = lerInt("Id do usuário: ");
 
-                    System.out.println(controller.mostrarIdade(id));
+                    System.out.println(controller.mostrarEnderecosPorId(id));
                     break;
                 }
             }

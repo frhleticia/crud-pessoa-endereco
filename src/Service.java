@@ -11,7 +11,7 @@ public class Service {
         this.repository = repository;
     }
 
-    public Pessoa criarUsuario(String nome, LocalDate dataNasc, String cpf, Endereco endereco){
+    public void criarUsuario(String nome, LocalDate dataNasc, String cpf, Endereco endereco){
 
         validarNome(nome);
 
@@ -29,8 +29,6 @@ public class Service {
         Pessoa p = new Pessoa(nome, dataNasc, cpf, enderecos);
         p.setId(proximoPessoaId++);
         repository.salvar(p);
-
-        return p;
     }
 
     public Pessoa buscarPessoaPorId(int pessoaId){
