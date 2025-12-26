@@ -36,11 +36,11 @@ public class Menu {
 
         switch (opcaoMenu){
             case 1:
-                    menuAlterar();
-                    break;
+                menuAlterar();
+                break;
             case 2:
-                    menuMostrar();
-                    break;
+                menuMostrar();
+                break;
         }
         return opcaoMenu;
     }
