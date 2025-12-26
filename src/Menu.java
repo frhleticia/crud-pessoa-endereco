@@ -40,7 +40,7 @@ public class Menu {
                     break;
             case 2:
                     menuMostrar();
-                break;
+                    break;
         }
         return opcaoMenu;
     }
@@ -62,8 +62,8 @@ public class Menu {
                     int id = lerInt("Id do usuário: ");
 
                     controller.addNovoEnderecoAUmUsuario(id);
+                    break;
                 }
-                break;
                 case 3: {
                     int id = lerInt("Id: ");
 
@@ -81,8 +81,8 @@ public class Menu {
                     int id = lerInt("Id do usuário: ");
 
                     controller.removerUsuario(id);
+                    break;
                 }
-                break;
             }
         } while (opcaoMenuA != -1);
     }
