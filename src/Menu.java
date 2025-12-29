@@ -30,8 +30,8 @@ public class Menu {
 
     public int controlaMenus(){
         int opcaoMenu = lerInt("""
-                (1) Opções de alteração (Criar, alterar, e excluir).
-                (2) Visualizar informações (Lista de usuários ou endereços, e idade).
+                (1) Opções de alteração (Criar, alterar e excluir).
+                (2) Visualizar informações (Usuários, endereços e idade).
                 (0) Sair.""");
 
         switch (opcaoMenu){
