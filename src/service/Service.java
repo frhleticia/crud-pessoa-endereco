@@ -1,3 +1,9 @@
+package service;
+
+import repository.Repository;
+import entity.Endereco;
+import entity.Pessoa;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +63,7 @@ public class Service {
         var p = repository.buscarPorId(pessoaId);
 
         if (p == null) {
-            throw new RuntimeException("Pessoa não encontrada");
+            throw new RuntimeException("main.java.entity.Pessoa não encontrada");
         }
 
         return p.getEnderecos().toString();
@@ -66,7 +72,7 @@ public class Service {
     public void atualizarPessoa(int pessoaId, String nome, LocalDate dataNasc, String cpf) {
         Pessoa p = repository.buscarPorId(pessoaId);
         if (p == null) {
-            throw new RuntimeException("Pessoa não encontrada");
+            throw new RuntimeException("main.java.entity.Pessoa não encontrada");
         }
 
         if (nome == null || nome.isBlank()){
@@ -105,7 +111,7 @@ public class Service {
     public void removerPessoa(int pessoaId) {
         Pessoa p = repository.buscarPorId(pessoaId);
         if (p == null) {
-            throw new RuntimeException("Pessoa não encontrada");
+            throw new RuntimeException("main.java.entity.Pessoa não encontrada");
         }
         repository.remover(p);
     }
@@ -113,7 +119,7 @@ public class Service {
     public int calcularIdade(int pessoaId){
         var p = repository.buscarPorId(pessoaId);
         if (p == null) {
-            throw new RuntimeException("Pessoa não encontrada");
+            throw new RuntimeException("main.java.entity.Pessoa não encontrada");
         }
         return p.calcularIdade();
     }

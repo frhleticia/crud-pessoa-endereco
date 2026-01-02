@@ -1,3 +1,6 @@
+package repository;
+
+import entity.Pessoa;
 import java.util.ArrayList;
 import java.util.List;
 

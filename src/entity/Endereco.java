@@ -1,3 +1,5 @@
+package entity;
+
 public class Endereco {
     private int id;
     private String rua;
@@ -18,7 +20,7 @@ public class Endereco {
 
     @Override
     public String toString() {
-        return "Endereco{" +
+        return "main.java.entity.Endereco{" +
                 "id=" + id +
                 ", rua='" + rua + '\'' +
                 ", numero=" + numero +

@@ -1,3 +1,9 @@
+package controller;
+
+import service.Service;
+import entity.Endereco;
+import entity.Pessoa;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
@@ -57,7 +63,6 @@ public class Controller {
         Endereco e = criarEndereco();
         List<Endereco> enderecos = p.getEnderecos();
         enderecos.add(e);
-        //p.setEnderecos(enderecos); //pensei q precisava settar de novo mas atualiza normalmente qnd mando add
     }
 
     public int mostrarIdade(int pessoaId){

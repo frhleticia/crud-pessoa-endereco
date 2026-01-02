@@ -1,3 +1,5 @@
+package entity;
+
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
@@ -18,7 +20,7 @@ public class Pessoa {
 
     @Override
     public String toString() {
-        return "Pessoa{" +
+        return "main.java.entity.Pessoa{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", dataNasc=" + dataNasc +
