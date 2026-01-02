@@ -23,12 +23,6 @@ public class Service {
 
         validarCpf(cpf, -1);
 
-        for (Pessoa p : repository.getUsuarios()){
-            if (cpf.equals(p.getCpf())){
-                throw new RuntimeException("CPF já cadastrado");
-            }
-        }
-
         List<Endereco> enderecos = new ArrayList<>();
         enderecos.add(endereco);
 
