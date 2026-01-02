@@ -1,4 +1,4 @@
-package test.fake;
+package repository;
 
 public class RepositoryTest {
 }
