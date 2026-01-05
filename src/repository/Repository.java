@@ -11,15 +11,6 @@ public class Repository {
         usuarios.add(pessoa);
     }
 
-    public Pessoa buscarPorId(int id){
-        for (Pessoa pessoa : usuarios){
-            if (pessoa.getId() == id){
-                return pessoa;
-            }
-        }
-        return null;
-    }
-
     public List<Pessoa> mostrarTodosUsuarios(){
         return usuarios;
     }

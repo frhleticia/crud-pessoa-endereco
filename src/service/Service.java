@@ -32,7 +32,12 @@ public class Service {
     }
 
     public Pessoa buscarPessoaPorId(int pessoaId){
-        return repository.buscarPorId(pessoaId);
+        for (Pessoa pessoa : repository.getUsuarios()){
+            if (pessoa.getId() == pessoaId){
+                return pessoa;
+            }
+        }
+        throw new RuntimeException("Pessoa não encontrada");
     }
 
     public void atribuirEnderecoAUmUsuario(int pessoaId, Endereco dadosDoEndereco){
@@ -102,7 +107,7 @@ public class Service {
     }
 
     public Pessoa validarPessoa(int pessoaId){
-        Pessoa p = repository.buscarPorId(pessoaId);
+        Pessoa p = buscarPessoaPorId(pessoaId);
         if (p == null) {
             throw new RuntimeException("Pessoa não encontrada");
         }

@@ -5,10 +5,15 @@ import entity.Pessoa;
 import repository.Repository;
 
 import java.time.LocalDate;
+import java.time.Period;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ServiceTest {
 
-    static void deveLancarExcecaoQuandoNomeNulo() {
+    @Test
+    void deveLancarExcecaoQuandoNomeNulo() {
         //Arranjo...dado
         Repository repository = new Repository();
         Service service = new Service(repository);
@@ -26,14 +31,13 @@ public class ServiceTest {
         }
     }
 
-    static void deveLancarExcecaoQuandoNomeBlank() {
-        //Arranjo...dado
+    @Test
+    void deveLancarExcecaoQuandoNomeBlank() {
         Repository repository = new Repository();
         Service service = new Service(repository);
 
         Endereco endereco = new Endereco("Rua Gomes", 231L, "Limoeiro", "Porto", "BA", "12345678");
 
-        //Ação...quando & Verificação...então
         try {
             service.criarUsuario("", LocalDate.of(2007, 12, 31), "12345678901", endereco);
             throw new RuntimeException(
@@ -44,7 +48,8 @@ public class ServiceTest {
         }
     }
 
-    static void deveLancarExcecaoQuandoCpfNulo() {
+    @Test
+    void deveLancarExcecaoQuandoCpfNulo() {
         Repository repository = new Repository();
         Service service = new Service(repository);
 
@@ -60,7 +65,8 @@ public class ServiceTest {
         }
     }
 
-    static void deveLancarExcecaoQuandoCpfBlank() {
+    @Test
+    void deveLancarExcecaoQuandoCpfBlank() {
         Repository repository = new Repository();
         Service service = new Service(repository);
 
@@ -76,7 +82,8 @@ public class ServiceTest {
         }
     }
 
-    static void deveLancarExcecaoQuandoCpfRepetido() {
+    @Test
+    void deveLancarExcecaoQuandoCpfRepetido() {
         Repository repository = new Repository();
         Service service = new Service(repository);
 
@@ -94,7 +101,8 @@ public class ServiceTest {
         }
     }
 
-    static void deveLancarExcecaoQuandoCpfTamanhoInvalido() {
+    @Test
+    void deveLancarExcecaoQuandoCpfTamanhoInvalido() {
         Repository repository = new Repository();
         Service service = new Service(repository);
 
@@ -110,7 +118,8 @@ public class ServiceTest {
         }
     }
 
-    static void deveSalvarUsuarioQuandoTodosDadosValidos() {
+    @Test
+    void deveSalvarUsuarioQuandoTodosDadosValidos() {
         Repository repository = new Repository();
         Service service = new Service(repository);
 
@@ -126,7 +135,8 @@ public class ServiceTest {
         }
     }
 
-    static void deveLancarExcecaoQuandoCepTamanhoInvalido() {
+    @Test
+    void deveLancarExcecaoQuandoCepTamanhoInvalido() {
         Repository repository = new Repository();
         Service service = new Service(repository);
 
@@ -140,7 +150,7 @@ public class ServiceTest {
         }
     }
 
-    static void deveCriarEnderecoQuandoTodosDadosValidos() {
+    void deveCriarEnderecoQuandoTodosDadosValidos() {
         Repository repository = new Repository();
         Service service = new Service(repository);
 
@@ -153,20 +163,41 @@ public class ServiceTest {
         }
     }
 
-    static void deveRetornarNuloQuandoPessoaInexistente() {
+    @Test
+    void deveAtribuirNovoEnderecoAoUsuarioQuandoTodosDadosValidos() {
         Repository repository = new Repository();
         Service service = new Service(repository);
 
-        Pessoa p = service.buscarPessoaPorId(999);
+        Endereco endereco = new Endereco(null, null, null, null, null, null);
+        service.criarUsuario("João", LocalDate.of(2007, 12, 31), "12345678901", endereco);
+        Endereco novoEndereco = service.criarEndereco("Rua Gomes", 231L, "Limoeiro", "Porto", "BA", "12345678");
+        service.atribuirEnderecoAUmUsuario(1, novoEndereco);
+        Pessoa p = service.buscarPessoaPorId(1);
 
-        if (p == null) {
-            System.out.println("Teste passou: pessoa inexistente retornou null");
+        if (p.getEnderecos().size() > 1) {
+            System.out.println("Teste passou: endereço novo salvo devidamente");
         } else {
-            System.out.println("Teste falhou: pessoa deveria ser null");
+            System.out.println("Teste falhou: endereço novo não foi salvo");
         }
     }
 
-    static void deveRetornarPessoaQuandoExistente() {
+    @Test
+    void deveRetornarNuloQuandoPessoaInexistente() {
+        Repository repository = new Repository();
+        Service service = new Service(repository);
+
+        try {
+            Pessoa p = service.buscarPessoaPorId(999);
+            if (p == null) {
+                throw new RuntimeException("Teste passou: pessoa inexistente retornou null");
+            }
+        } catch (RuntimeException e) {
+            System.out.println("Teste passou: " + e.getMessage());
+        }
+    }
+
+    @Test
+    void deveRetornarPessoaQuandoExistente() {
         Repository repository = new Repository();
         Service service = new Service(repository);
 
@@ -182,7 +213,8 @@ public class ServiceTest {
         }
     }
 
-    static void deveRetornarNuloQuandoListarEnderecosDePessoaInexistente() {
+    @Test
+    void deveRetornarNuloQuandoListarEnderecosDePessoaInexistente() {
         Repository repository = new Repository();
         Service service = new Service(repository);
 
@@ -193,35 +225,27 @@ public class ServiceTest {
             }
             throw new RuntimeException("Teste falhou: pessoa encontrada indevidamente");
         } catch (RuntimeException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Teste passou: " + e.getMessage());
         }
     }
 
-    static void deveRetornarListaDeEnderecosQuandoDePessoaExistente() {
-        Repository repository = new Repository();
-        Service service = new Service(repository);
-
-        Endereco endereco = new Endereco(null, null, null, null, null, null);
-        service.criarUsuario("João", LocalDate.of(2007, 12, 31), "12345678901", endereco);
-
-        try {
-            service.criarEndereco("Rua Gomes", 231L, "Limoeiro", "Porto", "BA", "12345678");
-            Pessoa p = service.buscarPessoaPorId(1);
-            if (p == null) {
-                throw new RuntimeException("Teste passou: pessoa não encontrada");
-            }
-            throw new RuntimeException("Teste falhou: pessoa encontrada indevidamente");
-        } catch (RuntimeException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    static void deveLancarExcecaoQuandoRemoverPessoaInexistente() {
+    @Test
+    void deveRetornarListaDeEnderecosQuandoPessoaExistente() {
         Repository repository = new Repository();
         Service service = new Service(repository);
 
         Endereco endereco = new Endereco("Rua Gomes", 231L, "Limoeiro", "Porto", "BA", "12345678");
-        service.criarUsuario("Joao", LocalDate.of(2007, 12, 31), "12345678901", endereco);
+        service.criarUsuario("João", LocalDate.of(2007, 12, 31), "12345678901", endereco);
+
+        String listaDeEnderecos = service.listarEnderecosPorId(1);
+
+        assertTrue(listaDeEnderecos.contains("Rua Gomes"));
+    }
+
+    @Test
+    void deveLancarExcecaoQuandoRemoverPessoaInexistente() {
+        Repository repository = new Repository();
+        Service service = new Service(repository);
 
         try {
             service.removerPessoa(999);
@@ -233,7 +257,51 @@ public class ServiceTest {
         }
     }
 
-    public static void main(String[] args) {
+    @Test
+    void deveRemoverPessoaQuandoPessoaExistenteForRemovida() {
+        Repository repository = new Repository();
+        Service service = new Service(repository);
+
+        Endereco endereco = new Endereco("Rua Gomes", 231L, "Limoeiro", "Porto", "BA", "12345678");
+        service.criarUsuario("Joao", LocalDate.of(2007, 12, 31), "12345678901", endereco);
+
+        try {
+            service.removerPessoa(1);
+            service.buscarPessoaPorId(1);
+            throw new RuntimeException(
+                    "Teste falhou: deveria ter lançado exceção");
+
+        } catch (RuntimeException e) {
+            System.out.println("Teste passou: " + e.getMessage());
+        }
+    }
+
+    @Test
+    void deveLancarExcecaoQuandoCalcularIdadeDePessoaInexistente() {
+        Repository repository = new Repository();
+        Service service = new Service(repository);
+
+        assertThrows(RuntimeException.class, () -> service.calcularIdade(999));
+    }
+
+    @Test
+    void deveRetornarIdadeQuandoPessoaExistentePedeOCalculo() {
+        Repository repository = new Repository();
+        Service service = new Service(repository);
+        LocalDate dataHoje = LocalDate.now();
+
+        Endereco endereco = new Endereco("Rua Gomes", 231L, "Limoeiro", "Porto", "BA", "12345678");
+        service.criarUsuario("Joao", LocalDate.of(2007, 12, 31), "12345678901", endereco);
+
+        Pessoa p = service.buscarPessoaPorId(1);
+
+        int idadeEsperada = Period.between(p.getDataNasc(), dataHoje).getYears();
+        int idadeCalculada = service.calcularIdade(1);
+
+        assertEquals(idadeEsperada, idadeCalculada);
+    }
+
+    public void main(String[] args) {
         //Criar usuário
         deveLancarExcecaoQuandoNomeNulo();
         deveLancarExcecaoQuandoNomeBlank();
@@ -245,14 +313,17 @@ public class ServiceTest {
         //Criar endereço
         deveLancarExcecaoQuandoCepTamanhoInvalido();
         deveCriarEnderecoQuandoTodosDadosValidos();
+        deveAtribuirNovoEnderecoAoUsuarioQuandoTodosDadosValidos();
         //Buscar pessoa por id
         deveRetornarNuloQuandoPessoaInexistente();
         deveRetornarPessoaQuandoExistente();
         deveRetornarNuloQuandoListarEnderecosDePessoaInexistente();
+        deveRetornarListaDeEnderecosQuandoPessoaExistente();
         //Remover pessoa
         deveLancarExcecaoQuandoRemoverPessoaInexistente();
+        deveRemoverPessoaQuandoPessoaExistenteForRemovida();
+        //Calcular idade
+        deveLancarExcecaoQuandoCalcularIdadeDePessoaInexistente();
+        deveRetornarIdadeQuandoPessoaExistentePedeOCalculo();
     }
 }
-
-//Endereco endereco = new Endereco(null, null, null, null, null, null);
-//        service.criarUsuario("João", LocalDate.of(2007, 12, 31), "12345678901", endereco);
