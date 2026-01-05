@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ServiceTest {
 
+    //Criar usuário
     @Test
     void deveLancarExcecaoQuandoNomeNulo() {
         //Arranjo...dado
@@ -135,6 +136,7 @@ public class ServiceTest {
         }
     }
 
+    //Criar endereço
     @Test
     void deveLancarExcecaoQuandoCepTamanhoInvalido() {
         Repository repository = new Repository();
@@ -182,6 +184,7 @@ public class ServiceTest {
         }
     }
 
+    //Buscar pessoa por id
     @Test
     void deveRetornarNuloQuandoPessoaInexistente() {
         Repository repository = new Repository();
@@ -243,6 +246,7 @@ public class ServiceTest {
         assertTrue(listaDeEnderecos.contains("Rua Gomes"));
     }
 
+    //Remover pessoa
     @Test
     void deveLancarExcecaoQuandoRemoverPessoaInexistente() {
         Repository repository = new Repository();
@@ -277,6 +281,7 @@ public class ServiceTest {
         }
     }
 
+    //Calcular idade
     @Test
     void deveLancarExcecaoQuandoCalcularIdadeDePessoaInexistente() {
         Repository repository = new Repository();
@@ -302,27 +307,3 @@ public class ServiceTest {
         assertEquals(idadeEsperada, idadeCalculada);
     }
 }
-
-//        //Criar usuário
-//        deveLancarExcecaoQuandoNomeNulo();
-//        deveLancarExcecaoQuandoNomeBlank();
-//        deveLancarExcecaoQuandoCpfNulo();
-//        deveLancarExcecaoQuandoCpfBlank();
-//        deveLancarExcecaoQuandoCpfRepetido();
-//        deveLancarExcecaoQuandoCpfTamanhoInvalido();
-//        deveSalvarUsuarioQuandoTodosDadosValidos();
-//        //Criar endereço
-//        deveLancarExcecaoQuandoCepTamanhoInvalido();
-//        deveCriarEnderecoQuandoTodosDadosValidos();
-//        deveAtribuirNovoEnderecoAoUsuarioQuandoTodosDadosValidos();
-//        //Buscar pessoa por id
-//        deveRetornarNuloQuandoPessoaInexistente();
-//        deveRetornarPessoaQuandoExistente();
-//        deveRetornarNuloQuandoListarEnderecosDePessoaInexistente();
-//        deveRetornarListaDeEnderecosQuandoPessoaExistente();
-//        //Remover pessoa
-//        deveLancarExcecaoQuandoRemoverPessoaInexistente();
-//        deveRemoverPessoaQuandoPessoaExistenteForRemovida();
-//        //Calcular idade
-//        deveLancarExcecaoQuandoCalcularIdadeDePessoaInexistente();
-//        deveRetornarIdadeQuandoPessoaExistentePedeOCalculo();
