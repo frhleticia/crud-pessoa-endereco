@@ -1,6 +1,7 @@
 package menu;
 
 import controller.Controller;
+import entity.Endereco;
 
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -65,7 +66,9 @@ public class Menu {
                 case 2: {
                     int id = lerInt("Id do usuário: ");
 
-                    controller.addNovoEnderecoAUmUsuario(id);
+                    Endereco dadosDoEndereco = controller.criarEndereco();
+
+                    controller.addNovoEnderecoAoUsuario(id, dadosDoEndereco);
                     break;
                 }
                 case 3: {

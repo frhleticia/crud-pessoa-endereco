@@ -2,10 +2,8 @@ package controller;
 
 import service.Service;
 import entity.Endereco;
-import entity.Pessoa;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Scanner;
 
 public class Controller {
@@ -58,11 +56,8 @@ public class Controller {
         return service.criarEndereco(rua, numero, bairro, cidade, estado, cep);
     }
 
-    public void addNovoEnderecoAUmUsuario(int pessoaId){
-        Pessoa p = service.buscarPessoaPorId(pessoaId);
-        Endereco e = criarEndereco();
-        List<Endereco> enderecos = p.getEnderecos();
-        enderecos.add(e);
+    public void addNovoEnderecoAoUsuario(int pessoaId, Endereco dadosDoEndereco){
+        service.atribuirEnderecoAUmUsuario(pessoaId, dadosDoEndereco);
     }
 
     public int mostrarIdade(int pessoaId){

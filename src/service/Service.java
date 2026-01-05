@@ -35,12 +35,18 @@ public class Service {
         return repository.buscarPorId(pessoaId);
     }
 
+    public void atribuirEnderecoAUmUsuario(int pessoaId, Endereco dadosDoEndereco){
+        Pessoa p = validarPessoa(pessoaId);
+        Endereco e = criarEndereco(dadosDoEndereco.getRua(), dadosDoEndereco.getNumero(), dadosDoEndereco.getBairro(), dadosDoEndereco.getCidade(), dadosDoEndereco.getEstado(), dadosDoEndereco.getCep());
+        List<Endereco> enderecos = p.getEnderecos();
+        enderecos.add(e);
+    }
+
     public void setIdDoEndereco(Endereco endereco){
         endereco.setId(proximoEnderecoId++);
     }
 
     public Endereco criarEndereco(String rua, Long numero, String bairro, String cidade, String estado, String cep){
-
         if (cep.length() != 8){
             throw new RuntimeException("CEP inválido");
         }
@@ -54,20 +60,13 @@ public class Service {
     }
 
     public String listarEnderecosPorId(int pessoaId){
-        var p = repository.buscarPorId(pessoaId);
-
-        if (p == null) {
-            throw new RuntimeException("main.java.entity.Pessoa não encontrada");
-        }
+        var p = validarPessoa(pessoaId);
 
         return p.getEnderecos().toString();
     }
 
     public void atualizarPessoa(int pessoaId, String nome, LocalDate dataNasc, String cpf) {
-        Pessoa p = repository.buscarPorId(pessoaId);
-        if (p == null) {
-            throw new RuntimeException("main.java.entity.Pessoa não encontrada");
-        }
+        Pessoa p = validarPessoa(pessoaId);
 
         if (nome == null || nome.isBlank()){
             throw new RuntimeException("Campo nome é obrigatório");
@@ -102,19 +101,21 @@ public class Service {
         }
     }
 
-    public void removerPessoa(int pessoaId) {
+    public Pessoa validarPessoa(int pessoaId){
         Pessoa p = repository.buscarPorId(pessoaId);
         if (p == null) {
-            throw new RuntimeException("main.java.entity.Pessoa não encontrada");
+            throw new RuntimeException("Pessoa não encontrada");
         }
+        return p;
+    }
+
+    public void removerPessoa(int pessoaId) {
+        Pessoa p = validarPessoa(pessoaId);
         repository.remover(p);
     }
 
     public int calcularIdade(int pessoaId){
-        var p = repository.buscarPorId(pessoaId);
-        if (p == null) {
-            throw new RuntimeException("main.java.entity.Pessoa não encontrada");
-        }
+        Pessoa p = validarPessoa(pessoaId);
         return p.calcularIdade();
     }
 }
