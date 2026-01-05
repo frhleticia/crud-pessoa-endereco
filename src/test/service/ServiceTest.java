@@ -150,6 +150,7 @@ public class ServiceTest {
         }
     }
 
+    @Test
     void deveCriarEnderecoQuandoTodosDadosValidos() {
         Repository repository = new Repository();
         Service service = new Service(repository);
@@ -300,30 +301,28 @@ public class ServiceTest {
 
         assertEquals(idadeEsperada, idadeCalculada);
     }
-
-    public void main(String[] args) {
-        //Criar usuário
-        deveLancarExcecaoQuandoNomeNulo();
-        deveLancarExcecaoQuandoNomeBlank();
-        deveLancarExcecaoQuandoCpfNulo();
-        deveLancarExcecaoQuandoCpfBlank();
-        deveLancarExcecaoQuandoCpfRepetido();
-        deveLancarExcecaoQuandoCpfTamanhoInvalido();
-        deveSalvarUsuarioQuandoTodosDadosValidos();
-        //Criar endereço
-        deveLancarExcecaoQuandoCepTamanhoInvalido();
-        deveCriarEnderecoQuandoTodosDadosValidos();
-        deveAtribuirNovoEnderecoAoUsuarioQuandoTodosDadosValidos();
-        //Buscar pessoa por id
-        deveRetornarNuloQuandoPessoaInexistente();
-        deveRetornarPessoaQuandoExistente();
-        deveRetornarNuloQuandoListarEnderecosDePessoaInexistente();
-        deveRetornarListaDeEnderecosQuandoPessoaExistente();
-        //Remover pessoa
-        deveLancarExcecaoQuandoRemoverPessoaInexistente();
-        deveRemoverPessoaQuandoPessoaExistenteForRemovida();
-        //Calcular idade
-        deveLancarExcecaoQuandoCalcularIdadeDePessoaInexistente();
-        deveRetornarIdadeQuandoPessoaExistentePedeOCalculo();
-    }
 }
+
+//        //Criar usuário
+//        deveLancarExcecaoQuandoNomeNulo();
+//        deveLancarExcecaoQuandoNomeBlank();
+//        deveLancarExcecaoQuandoCpfNulo();
+//        deveLancarExcecaoQuandoCpfBlank();
+//        deveLancarExcecaoQuandoCpfRepetido();
+//        deveLancarExcecaoQuandoCpfTamanhoInvalido();
+//        deveSalvarUsuarioQuandoTodosDadosValidos();
+//        //Criar endereço
+//        deveLancarExcecaoQuandoCepTamanhoInvalido();
+//        deveCriarEnderecoQuandoTodosDadosValidos();
+//        deveAtribuirNovoEnderecoAoUsuarioQuandoTodosDadosValidos();
+//        //Buscar pessoa por id
+//        deveRetornarNuloQuandoPessoaInexistente();
+//        deveRetornarPessoaQuandoExistente();
+//        deveRetornarNuloQuandoListarEnderecosDePessoaInexistente();
+//        deveRetornarListaDeEnderecosQuandoPessoaExistente();
+//        //Remover pessoa
+//        deveLancarExcecaoQuandoRemoverPessoaInexistente();
+//        deveRemoverPessoaQuandoPessoaExistenteForRemovida();
+//        //Calcular idade
+//        deveLancarExcecaoQuandoCalcularIdadeDePessoaInexistente();
+//        deveRetornarIdadeQuandoPessoaExistentePedeOCalculo();
