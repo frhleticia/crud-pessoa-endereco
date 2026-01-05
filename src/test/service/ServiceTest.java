@@ -84,6 +84,19 @@ public class ServiceTest {
         assertNotNull(p);
     }
 
+    //Atualizar pessoa
+    @Test
+    void deveLancarExcecaoQuandoCpfRepetidoAoAtualizarPessoa() {
+
+        Endereco endereco = new Endereco("Rua Gomes", 231L, "Limoeiro", "Porto", "BA", "12345678");
+
+        service.criarUsuario("João", LocalDate.of(2007, 12, 31), "11122233344", endereco);
+
+        service.criarUsuario("Joana", LocalDate.of(2002, 2, 10), "55522233344", endereco);
+
+        assertThrows(RuntimeException.class, () -> service.atualizarPessoa(1, "João", LocalDate.of(2005, 1, 3), "55522233344"));
+    }
+
     //Criar endereço
     @Test
     void deveLancarExcecaoQuandoCepTamanhoInvalido() {
@@ -164,6 +177,12 @@ public class ServiceTest {
         service.removerPessoa(1);
 
         assertThrows(RuntimeException.class, () -> service.buscarPessoaPorId(1));
+    }
+
+    @Test
+    void deveLancarExcecaoQuandoTentaRemoverComAListaVazia() {
+
+        assertThrows(RuntimeException.class, () -> service.removerPessoa(1));
     }
 
     //Calcular idade

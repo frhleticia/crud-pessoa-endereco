@@ -107,14 +107,13 @@ public class Service {
     }
 
     public Pessoa validarPessoa(int pessoaId){
-        Pessoa p = buscarPessoaPorId(pessoaId);
-        if (p == null) {
-            throw new RuntimeException("Pessoa não encontrada");
-        }
-        return p;
+        return buscarPessoaPorId(pessoaId);
     }
 
     public void removerPessoa(int pessoaId) {
+        if (repository.getUsuarios().isEmpty()){
+            throw new RuntimeException("Não há usuários para remover");
+        }
         Pessoa p = validarPessoa(pessoaId);
         repository.remover(p);
     }
