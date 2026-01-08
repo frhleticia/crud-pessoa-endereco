@@ -79,7 +79,7 @@ public class ServiceTest {
         Endereco endereco = new Endereco("Rua Gomes", 231L, "Limoeiro", "Porto", "BA", "12345678");
         service.criarUsuario("João", LocalDate.of(2007, 12, 31), "12345678901", endereco);
 
-        Pessoa p = service.buscarPessoaPorId(1);
+        Pessoa p = service.validarPessoa(1);
 
         assertNotNull(p);
     }
@@ -121,7 +121,7 @@ public class ServiceTest {
         Endereco novoEndereco = service.criarEndereco("Rua Gomes", 231L, "Limoeiro", "Porto", "BA", "12345678");
         service.atribuirEnderecoAUmUsuario(1, novoEndereco);
 
-        Pessoa p = service.buscarPessoaPorId(1);
+        Pessoa p = service.validarPessoa(1);
 
         assertEquals(2, p.getEnderecos().size());
     }
@@ -130,7 +130,7 @@ public class ServiceTest {
     @Test
     void deveRetornarNuloQuandoPessoaInexistente() {
 
-        assertThrows(RuntimeException.class, () -> service.buscarPessoaPorId(999));
+        assertThrows(RuntimeException.class, () -> service.validarPessoa(999));
     }
 
     @Test
@@ -139,7 +139,7 @@ public class ServiceTest {
         Endereco endereco = new Endereco(null, null, null, null, null, null);
         service.criarUsuario("João", LocalDate.of(2007, 12, 31), "12345678901", endereco);
 
-        Pessoa p = service.buscarPessoaPorId(1);
+        Pessoa p = service.validarPessoa(1);
 
         assertNotNull(p);
     }
@@ -176,7 +176,7 @@ public class ServiceTest {
 
         service.removerPessoa(1);
 
-        assertThrows(RuntimeException.class, () -> service.buscarPessoaPorId(1));
+        assertThrows(RuntimeException.class, () -> service.validarPessoa(1));
     }
 
     @Test
@@ -200,7 +200,7 @@ public class ServiceTest {
         Endereco endereco = new Endereco("Rua Gomes", 231L, "Limoeiro", "Porto", "BA", "12345678");
         service.criarUsuario("Joao", LocalDate.of(2007, 12, 31), "12345678901", endereco);
 
-        Pessoa p = service.buscarPessoaPorId(1);
+        Pessoa p = service.validarPessoa(1);
 
         int idadeEsperada = Period.between(p.getDataNasc(), dataHoje).getYears();
         int idadeCalculada = service.calcularIdade(1);

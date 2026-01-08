@@ -18,9 +18,7 @@ public class Service {
     }
 
     public void criarUsuario(String nome, LocalDate dataNasc, String cpf, Endereco endereco){
-
         validarNome(nome);
-
         validarCpf(cpf, -1);
 
         List<Endereco> enderecos = new ArrayList<>();
@@ -29,15 +27,6 @@ public class Service {
         Pessoa p = new Pessoa(nome, dataNasc, cpf, enderecos);
         p.setId(proximoPessoaId++);
         repository.salvar(p);
-    }
-
-    public Pessoa buscarPessoaPorId(int pessoaId){
-        for (Pessoa pessoa : repository.getUsuarios()){
-            if (pessoa.getId() == pessoaId){
-                return pessoa;
-            }
-        }
-        throw new RuntimeException("Pessoa não encontrada");
     }
 
     public void atribuirEnderecoAUmUsuario(int pessoaId, Endereco dadosDoEndereco){
@@ -61,7 +50,7 @@ public class Service {
     }
 
     public String listarTodosUsuarios(){
-        return repository.mostrarTodosUsuarios().toString();
+        return repository.getUsuarios().toString();
     }
 
     public String listarEnderecosPorId(int pessoaId){
@@ -71,13 +60,10 @@ public class Service {
     }
 
     public void atualizarPessoa(int pessoaId, String nome, LocalDate dataNasc, String cpf) {
-        Pessoa p = validarPessoa(pessoaId);
-
-        if (nome == null || nome.isBlank()){
-            throw new RuntimeException("Campo nome é obrigatório");
-        }
-
+        validarNome(nome);
         validarCpf(cpf, pessoaId);
+
+        Pessoa p = validarPessoa(pessoaId);
 
         p.setNome(nome);
         p.setDataNasc(dataNasc);
@@ -89,14 +75,14 @@ public class Service {
             throw new RuntimeException("Campo CPF é obrigatório");
         }
 
+        if (cpf.length() != 11){
+            throw new RuntimeException("CPF deve conter 11 dígitos");
+        }
+
         for (Pessoa p : repository.getUsuarios()){
             if (p.getCpf().equals(cpf) && p.getId() != pessoaId){
                 throw new RuntimeException("CPF já cadastrado");
             }
-        }
-
-        if (cpf.length() != 11){
-            throw new RuntimeException("CPF deve conter 11 dígitos");
         }
     }
 
@@ -107,7 +93,12 @@ public class Service {
     }
 
     public Pessoa validarPessoa(int pessoaId){
-        return buscarPessoaPorId(pessoaId);
+        for (Pessoa pessoa : repository.getUsuarios()){
+            if (pessoa.getId() == pessoaId){
+                return pessoa;
+            }
+        }
+        throw new RuntimeException("Pessoa não encontrada");
     }
 
     public void removerPessoa(int pessoaId) {

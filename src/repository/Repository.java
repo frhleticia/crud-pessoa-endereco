@@ -11,19 +11,11 @@ public class Repository {
         usuarios.add(pessoa);
     }
 
-    public List<Pessoa> mostrarTodosUsuarios(){
-        return usuarios;
-    }
-
     public void remover(Pessoa pessoa){
         usuarios.remove(pessoa);
     }
 
     public List<Pessoa> getUsuarios() {
         return usuarios;
-    }
-
-    public void setUsuarios(List<Pessoa> usuarios) {
-        this.usuarios = usuarios;
     }
 }
